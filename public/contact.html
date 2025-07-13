@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>Contact Us - CampusFind</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js"></script>
+    <script src="firebase-config.js"></script>
+</head>
+<body class="bg-[#1f4e8c] min-h-screen flex items-center justify-center p-4">
+<div class="bg-white rounded-lg shadow-lg w-full max-w-md">
+    <header class="bg-[#1f4e8c] rounded-t-lg flex items-center justify-between px-6 py-4">
+        <h1 class="text-white font-extrabold text-lg select-none">CampusFind</h1>
+        <nav class="flex space-x-6 text-white text-sm font-normal">
+            <a href="index.html" class="hover:underline">Home</a>
+            <a href="post.html" class="hover:underline">Post Item</a>
+            <a href="search.html" class="hover:underline">Search</a>
+            <a href="contact.html" class="hover:underline">Contact</a>
+        </nav>
+    </header>
+    <main class="px-6 py-8">
+        <h2 class="text-[#1f4e8c] font-extrabold text-3xl text-center mb-6 select-none">Contact Us</h2>
+        <form class="border border-gray-300 rounded-md p-4 space-y-4">
+            <div>
+                <label for="name" class="block text-base text-black mb-1 select-none">Your Name:</label>
+                <input id="name" type="text" placeholder="Enter your name" class="w-full border border-gray-300 rounded-md px-3 py-2 text-gray-600 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#1f4e8c]"/>
+            </div>
+            <div>
+                <label for="email" class="block text-base text-black mb-1 select-none">Email Address:</label>
+                <input id="email" type="email" placeholder="Enter your email" class="w-full border border-gray-300 rounded-md px-3 py-2 text-gray-600 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#1f4e8c]"/>
+            </div>
+            <div>
+                <label for="subject" class="block text-base text-black mb-1 select-none">Subject:</label>
+                <input id="subject" type="text" placeholder="E.g. Feedback or Help" class="w-full border border-gray-300 rounded-md px-3 py-2 text-gray-600 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#1f4e8c]"/>
+            </div>
+            <div>
+                <label for="message" class="block text-base text-black mb-1 select-none">Your Message:</label>
+                <textarea id="message" rows="4" placeholder="Type your message here..." class="w-full border border-gray-300 rounded-md px-3 py-2 text-gray-600 placeholder-gray-500 resize-none focus:outline-none focus:ring-2 focus:ring-[#1f4e8c]"></textarea>
+            </div>
+            <button type="submit" class="w-full bg-[#1f4e8c] text-white font-semibold py-2 rounded-md flex items-center justify-center space-x-2 hover:bg-[#1a3e6b] transition-colors">
+                <i class="fas fa-envelope"></i>
+                <span>Send Message</span>
+            </button>
+            <div class="pt-2 border-t border-gray-300 mt-2 space-y-2 text-black text-base select-none">
+                <p class="flex items-center space-x-2"><i class="fas fa-envelope"></i><span>support@campusfind.in</span></p>
+               

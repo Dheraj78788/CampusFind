@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>Search Items - CampusFind</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js"></script>
+    <script src="firebase-config.js"></script>
+</head>
+<body class="bg-[#f7faff] text-[#1e3a70] min-h-screen flex flex-col">
+<header class="bg-[#1e3a70]">
+    <nav class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex items-center justify-between h-14">
+            <div class="text-white font-semibold text-2xl leading-none select-none">CampusFind</div>
+            <ul class="hidden md:flex space-x-10 text-white text-lg font-semibold">
+                <li><a class="hover:underline" href="index.html">Home</a></li>
+                <li><a class="hover:underline" href="post.html">Post Item</a></li>
+                <li><a class="hover:underline" href="search.html">Search</a></li>
+                <li><a class="hover:underline" href="contact.html">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+</header>
+<main class="flex-grow max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+    <h1 class="text-[#1e3a70] font-bold text-3xl sm:text-4xl mb-6 select-none">Search Lost & Found Items</h1>
+    <form class="flex flex-col sm:flex-row sm:items-center gap-4 mb-6" id="searchForm">
+        <input class="flex-grow rounded-md border border-gray-300 px-4 py-2 text-lg text-[#1e3a70] focus:outline-none focus:ring-2 focus:ring-[#1e3a70]" placeholder="Search by item name" type="text" id="searchInput"/>
+        <button class="bg-[#1e3a70] text-white text-lg font-semibold rounded-md px-5 py-2 flex items-center justify-center gap-2 hover:bg-[#16325c] transition" type="submit">
+            <i class="fas fa-search"></i> Search
+        </button>
+    </form>
+    <section id="searchResults" class="grid grid-cols-1 sm:grid-cols-2 gap-6"></section>
+</main>
+<footer class="bg-[#1e3a70] text-white text-center py-4 select-none">© 2025 CampusFind | College Lost & Found Portal</footer>
+<script>
+    document.getElementById('searchForm').addEventListener('submit', function (e) {
+        e.preventDefault();
+        const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+        document.getElementById('searchResults').innerHTML = '';
+
+        db.collection("items").get().then((querySnapshot) => {
+            querySnapshot.forEach((doc) => {
+                const item = doc.data();
+                if (item.name.toLowerCase().includes(searchTerm)) {
+                    document.getElementById('searchResults').innerHTML += `
+                        <article class="bg-white rounded-lg border border-gray-200 p-4 flex flex-col items-center text-center">
+                            <img alt="${item.name}" class="mb-4 max-h-36 object-contain" height="150" src="${item.image}" width="150"/>
+                            <h2 class="text-xl font-semibold text-[#1e3a70] mb-2">${item.name}</h2>
+                            <p class="text-base text-black leading-relaxed">${item.description}</p>
+                        </article>
+                    `;
+                }
+            });
+        });
+    });
+</script>
+</body>
+</html>

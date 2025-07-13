@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>Post Item - CampusFind</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js"></script>
+    <script src="firebase-config.js"></script>
+</head>
+<body class="bg-slate-50 min-h-screen flex flex-col">
+<header class="bg-[#1e448a]">
+    <nav class="max-w-4xl mx-auto flex items-center justify-between px-4 py-3">
+        <div class="text-white font-extrabold text-xl select-none">CampusFind</div>
+        <ul class="flex space-x-8 text-white text-base font-normal">
+            <li><a href="index.html" class="hover:underline">Home</a></li>
+            <li><a href="post.html" class="hover:underline">Post Item</a></li>
+            <li><a href="search.html" class="hover:underline">Search</a></li>
+            <li><a href="contact.html" class="hover:underline">Contact</a></li>
+        </ul>
+    </nav>
+</header>
+<main class="flex-grow flex justify-center px-4 py-8">
+    <form class="bg-white rounded-lg max-w-md w-full p-6 shadow-sm" aria-label="Post Lost or Found Item Form" id="postForm">
+        <h1 class="text-[#1e2a4a] font-extrabold text-2xl mb-6 text-center">Post Lost or Found Item</h1>
+        <label for="item-name" class="block mb-1 text-[#1e2a4a] font-normal text-base">Item Name:</label>
+        <input type="text" id="item-name" name="item-name" placeholder="e.g. ID Card, Phone" class="w-full border border-gray-300 rounded-md px-3 py-2 mb-4 text-base text-gray-900 placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-[#1e448a]"/>
+        <label for="upload-image" class="block mb-1 text-[#1e2a4a] font-normal text-base">Upload Image:</label>
+        <input type="file" id="upload-image" name="upload-image" class="mb-4"/>
+        <label for="description" class="block mb-1 text-[#1e2a4a] font-normal text-base">Description:</label>
+        <textarea id="description" name="description" rows="3" placeholder="Write details..." class="w-full border border-gray-300 rounded-md px-3 py-2 mb-4 text-base text-gray-900 placeholder:text-gray-500 resize-none focus:outline-none focus:ring-2 focus:ring-[#1e448a]"></textarea>
+        <button type="submit" class="w-full bg-[#1e448a] text-white font-extrabold text-lg py-2 rounded-md flex items-center justify-center space-x-2 hover:bg-[#16336b] transition-colors">
+            <i class="fas fa-paper-plane"></i>
+            <span>Submit</span>
+        </button>
+    </form>
+</main>
+<footer class="bg-[#1e448a] text-white text-center py-3 select-none">© 2025 CampusFind | Lost & Found System</footer>
+<script>
+    document.getElementById('postForm').addEventListener('submit', function (e) {
+        e.preventDefault();
+        const itemName = document.getElementById('item-name').value;
+        const description = document.getElementById('description').value;
+        const fileInput = document.getElementById('upload-image');
+        const file = fileInput.files[0];
+
+        // Upload image to Firebase Storage
+        const storageRef = firebase.storage().ref();
+        const fileRef = storageRef.child(file.name);
+        fileRef.put(file).then(() => {
+            fileRef.getDownloadURL().then((url) => {
+                // Save item data to Firestore
+                db.collection("items").add({
+                    name: itemName,
+                    description: description,
+                    image: url
+                }).then(() => {
+                    alert("Item posted successfully!");
+                    document.getElementById('postForm').reset();
+                }).catch((error) => {
+                    console.error("Error posting item:", error);
+                });
+            });
+        });
+    });
+</script>
+</body>
+</html>

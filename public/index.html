@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1" name="viewport"/>
+    <title>CampusFind</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js"></script>
+    <script src="firebase-config.js"></script>
+</head>
+<body class="bg-[#FEF6E7] text-[#0F2F5B] font-sans">
+<header class="bg-[#2D5DA1] shadow-md">
+    <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-16">
+        <div class="text-white font-extrabold text-xl select-none">CampusFind</div>
+        <ul class="hidden md:flex space-x-8 text-white text-base font-semibold">
+            <li><a class="hover:underline" href="index.html">Home</a></li>
+            <li><a class="hover:underline" href="post.html">Post Item</a></li>
+            <li><a class="hover:underline" href="search.html">Search</a></li>
+            <li><a class="hover:underline" href="contact.html">Contact</a></li>
+        </ul>
+    </nav>
+</header>
+<main class="bg-[#2D5DA1] text-[#F6F0E6] text-center px-6 py-12 sm:py-16">
+    <h1 class="font-extrabold text-4xl sm:text-5xl leading-tight max-w-3xl mx-auto">Lost something?<br/>Found something!</h1>
+    <p class="mt-4 text-lg max-w-xl mx-auto font-normal">Post it here and help your campus community!</p>
+    <div class="mt-8 flex flex-col sm:flex-row justify-center gap-4 max-w-md mx-auto">
+        <button class="bg-[#F9C646] text-[#2D5DA1] font-semibold text-lg px-8 py-3 rounded shadow-md flex items-center justify-center hover:bg-yellow-400 transition" type="button" onclick="location.href='post.html'">
+            <span class="text-2xl mr-2 font-extrabold select-none">+</span> Post <span class="font-extrabold ml-1">Item</span>
+        </button>
+        <button class="bg-[#1B355A] text-[#F6F0E6] font-semibold text-lg px-8 py-3 rounded shadow-md flex items-center justify-center hover:bg-[#152a4a] transition" type="button" onclick="location.href='search.html'">
+            <i class="fas fa-search mr-2"></i> Search Items
+        </button>
+    </div>
+</main>
+<section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <h2 class="text-[#0F2F5B] font-semibold text-xl mb-4 select-none">Recent Lost & Found Posts</h2>
+    <div id="items" class="grid grid-cols-1 sm:grid-cols-3 gap-4"></div>
+</section>
+<footer class="bg-[#2D5DA1] text-[#F6F0E6] text-center py-4 select-none">© 2025 CampusFind | College Lost & Found Portal</footer>
+<script>
+    // Fetch and display items
+    db.collection("items").get().then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+            const item = doc.data();
+            document.getElementById('items').innerHTML += `
+                <article class="bg-[#FEF6E7] rounded-md p-4 shadow-sm">
+                    <img alt="${item.name}" class="mx-auto mb-4" height="120" src="${item.image}" width="120"/>
+                    <h3 class="font-extrabold text-lg text-[#0F2F5B] mb-1 select-none">${item.name}</h3>
+                    <p class="text-[#0F2F5B] text-base leading-relaxed">${item.description}</p>
+                </article>
+            `;
+        });
+    });
+</script>
+</body>
+</html>
